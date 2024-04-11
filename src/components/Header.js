@@ -14,7 +14,9 @@ export const Header = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink activeClassName={classes.active} to="/products">Products</NavLink>
+          <NavLink activeClassName={classes.active} to="/products">
+            Products
+          </NavLink>
         </li>
       </ul>
     </nav>
