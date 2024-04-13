@@ -1,13 +1,15 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+import { Prompt } from 'react-router-dom'
 import Card from '../Utils/Card'
 import LoadingSpinner from '../Utils/LoadingSpinner'
 import classes from './QuoteForm.module.css'
 
 const QuoteForm = ({ onAddQuote, isLoading }) => {
+  const [isEntered, setIsEntered] = useState(false)
   const authorInputRef = useRef()
   const textInputRef = useRef()
 
-  function submitFormHandler(event) {
+  const submitFormHandler = (event) => {
     event.preventDefault()
 
     const enteredAuthor = authorInputRef.current.value
@@ -17,9 +19,27 @@ const QuoteForm = ({ onAddQuote, isLoading }) => {
     onAddQuote({ author: enteredAuthor, text: enteredText })
   }
 
+  const stopTrackingEntered = () => {
+    setIsEntered(false)
+  }
+
+  const formFocusHandler = () => {
+    setIsEntered(true)
+  }
+
   return (
     <Card>
-      <form className={classes.form} onSubmit={submitFormHandler}>
+      <Prompt
+        when={isEntered}
+        message={(location) =>
+          'Are you sure you want to leave the page? All your entered data will be lost'
+        }
+      />
+      <form
+        className={classes.form}
+        onSubmit={submitFormHandler}
+        onFocus={formFocusHandler}
+      >
         {isLoading && (
           <div className={classes.loading}>
             <LoadingSpinner />
@@ -35,7 +55,9 @@ const QuoteForm = ({ onAddQuote, isLoading }) => {
           <textarea id="text" rows="5" ref={textInputRef}></textarea>
         </div>
         <div className={classes.actions}>
-          <button className="btn">Add Quote</button>
+          <button className="btn" onClick={stopTrackingEntered}>
+            Add Quote
+          </button>
         </div>
       </form>
     </Card>
