@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom'
 import { Layout } from '../components/Layout/Layout'
 import QuoteForm from '../components/Quotes/QuoteForm'
 
-export const NewQuote = () => {
+const NewQuote = () => {
   const history = useHistory()
 
   const addQuoteHandler = (quoteData) => {
@@ -20,3 +20,5 @@ export const NewQuote = () => {
     </Layout>
   )
 }
+
+export default NewQuote
